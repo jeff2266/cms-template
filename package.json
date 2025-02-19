@@ -1,0 +1,13 @@
+{
+  "name": "directus-sandbox",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Jeffrey Yan",
+  "license": "ISC",
+  "workspaces": [
+    "frontend"
+  ],
+  "devDependencies": {
+    "prettier": "^3.5.1"
+  }
+}
