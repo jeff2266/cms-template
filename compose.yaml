@@ -1,6 +1,12 @@
 name: cms-template
 
 services:
+    proxy:
+        image: jeff2266.engineering/$COMPOSE_PROJECT_NAME:latest
+        build:
+            context: ./proxy/
+        ports:
+            - 80:80
     frontend:
         image: jeff2266.engineering/$COMPOSE_PROJECT_NAME:latest
         build:
