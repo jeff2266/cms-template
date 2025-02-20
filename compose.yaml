@@ -5,8 +5,17 @@ services:
         image: jeff2266.engineering/$COMPOSE_PROJECT_NAME-proxy:latest
         build:
             context: ./proxy/
+        depends_on:
+            frontend:
+                condition: service_started
+                restart: true
+            backend:
+                condition: service_started
+                restart: true
         ports:
             - 80:80
+        environment:
+            DOMAIN_NAME: 'localhost'
     frontend:
         image: jeff2266.engineering/$COMPOSE_PROJECT_NAME-frontend:latest
         build:

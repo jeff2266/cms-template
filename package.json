@@ -1,12 +1,14 @@
 {
-  "name": "directus-sandbox",
+  "name": "cms-template",
   "version": "0.0.1",
-  "main": "index.js",
   "author": "Jeffrey Yan",
   "license": "ISC",
   "workspaces": [
     "frontend"
   ],
+  "scripts": {
+    "build": "npm run build --ws"
+  },
   "devDependencies": {
     "prettier": "^3.5.1"
   }
