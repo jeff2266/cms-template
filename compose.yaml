@@ -15,20 +15,61 @@ services:
         ports:
             - 80:80
         environment:
-            - DOMAIN_NAME
+            - DOMAIN_NAME=${DOMAIN_NAME:?}
     frontend:
-        image: jeff2266.engineering/$COMPOSE_PROJECT_NAME-frontend:latest
+        image: jeff2266.engineering/${COMPOSE_PROJECT_NAME}-frontend:latest
         build:
-            context: ./frontend/
-        ports:
-            - 4321:4321
+            context: ./frontend
     backend:
-        image: jeff2266.engineering/$COMPOSE_PROJECT_NAME-directus:latest
+        image: jeff2266.engineering/${COMPOSE_PROJECT_NAME}-backend:latest
         build:
-            context: ./backend/
-        ports:
-            - 8055:8055
+            context: ./backend
+        # volumes:
+        #     - backend-db:/directus/database
+        #     - backend-uploads:/directus/uploads
+        #     - backend-logs:/directus/logs
         environment:
-            - ADMIN_EMAIL: 'jeff2266@gmail.com'
-            - ADMIN_PASSWORD: 'P@ssw0rd'
-            - SECRET: 'replace-with-secure-random-value'
+            # PM2
+            - PM2_LOG_OUT_FILE=/directus/logs/out.log
+            - PM2_LOG_ERROR_FILE=/directus/logs/error.log
+            # GENERAL
+            - LOG_LEVEL
+            # SECURITY
+            # Initial admin user credentials
+            - ADMIN_EMAIL=${ADMIN_EMAIL:?}
+            - ADMIN_PASSWORD=${ADMIN_PASSWORD:?}
+            # If not set, a random value will be used. This means sessions won't persist across restarts or 
+            # horizontally scaled deployments.
+            - SECRET
+            - CORS_ENABLED
+            - CORS_ORIGIN
+            # CACHE
+            - CACHE_ENABLED
+            # FILE STORAGE
+            # Maximum file upload size allowed. For example 10mb, 1gb, 10kb.
+            - FILES_MAX_UPLOAD_SIZE
+            # AUTHENTICATION
+            # See example authentication providers here: https://docs.directus.io/self-hosted/sso-examples.html
+            # EMAIL
+            - EMAIL_FROM=no-reply@${DOMAIN_NAME:?}
+            # WEBSOCKETS
+            - WEBSOCKETS_ENABLED
+volumes:
+    backend-db:
+        driver: local
+        driver_opts:
+            o: bind
+            type: none
+            device: ${APP_DATA:-/tmp}/backend/database
+    backend-uploads:
+        driver: local
+        driver_opts:
+            o: bind
+            type: none
+            device: ${APP_DATA:-/tmp}/backend/uploads
+    backend-logs:
+        driver: local
+        driver_opts:
+            o: bind
+            type: none
+            device: ${APP_DATA:-/tmp}/backend/logs
