@@ -15,7 +15,7 @@ services:
         ports:
             - 80:80
         environment:
-            DOMAIN_NAME: 'localhost'
+            - DOMAIN_NAME
     frontend:
         image: jeff2266.engineering/$COMPOSE_PROJECT_NAME-frontend:latest
         build:
@@ -29,6 +29,6 @@ services:
         ports:
             - 8055:8055
         environment:
-            ADMIN_EMAIL: 'jeff2266@gmail.com'
-            ADMIN_PASSWORD: 'P@ssw0rd'
-            SECRET: 'replace-with-secure-random-value'
+            - ADMIN_EMAIL: 'jeff2266@gmail.com'
+            - ADMIN_PASSWORD: 'P@ssw0rd'
+            - SECRET: 'replace-with-secure-random-value'

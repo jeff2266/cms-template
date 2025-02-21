@@ -6,9 +6,6 @@
   "workspaces": [
     "frontend"
   ],
-  "scripts": {
-    "build": "npm run build --ws"
-  },
   "devDependencies": {
     "prettier": "^3.5.1"
   }
