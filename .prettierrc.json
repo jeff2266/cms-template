@@ -3,9 +3,18 @@
 	"trailingComma": "none",
 	"useTabs": true,
 	"tabWidth": 4,
-	"printWidth": 125,
+	"printWidth": 112,
+	"proseWrap": "always",
 	"arrowParens": "avoid",
 	"singleQuote": true,
 	"bracketSameLine": true,
-	"endOfLine": "lf"
+	"endOfLine": "lf",
+	"overrides": [
+		{
+			"files": "*.yaml",
+			"options": {
+				"tabWidth": 2
+			}
+		}
+	]
 }

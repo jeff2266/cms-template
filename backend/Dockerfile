@@ -3,5 +3,8 @@ FROM directus/directus:11
 
 # Need to install pm2-logrotate
 
+# Volume permissions
+
+
 # Copy the migrations directory into the container
 COPY migrations /directus/migrations
