@@ -2,7 +2,7 @@ name: cms-template
 
 services:
   proxy:
-    image: jeff2266.engineering/$COMPOSE_PROJECT_NAME-proxy:latest
+    image: jeff2266.engineering/${COMPOSE_PROJECT_NAME}-proxy:latest
     build:
       context: ./proxy/
     depends_on:
@@ -52,8 +52,20 @@ services:
       # See example authentication providers here: https://docs.directus.io/self-hosted/sso-examples.html
       # EMAIL
       - EMAIL_FROM=no-reply@${DOMAIN_NAME:?}
+      - EMAIL_TRANSPORT=smtp
+      - EMAIL_SMTP_HOST=${EMAIL_SMTP_HOST:?}
+      - EMAIL_SMTP_PORT=${EMAIL_SMTP_PORT:?}
+      - EMAIL_SMTP_USER=${EMAIL_SMTP_USER}
+      - EMAIL_SMTP_PASSWORD=${EMAIL_SMTP_PASSWORD}
+      - EMAIL_SMTP_SECURE=${EMAIL_SMTP_SECURE:-true}
       # WEBSOCKETS
       - WEBSOCKETS_ENABLED
+  email:
+    image: inbucket/inbucket:latest
+    ports:
+      - 9000:9000
+    profiles:
+      - local
 volumes:
   backend-db:
     driver: local
